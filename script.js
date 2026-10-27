@@ -7,7 +7,15 @@
     normal: { pairs: 6, cols: 4, seconds: 75, label: "보통" },
     hard: { pairs: 8, cols: 5, seconds: 90, label: "어려움" }
   };
-  const pictures = ["🐻","🚙","🐤","🦊","🍎","🐸","🌳","⭐","🐱","🍓","🐼","🦋","🍉","🐶","🚀","🐢","🍒","🦁","🐰","🍋","🐳","🍄","🎈","🐧"];
+  // 충분히 많은 서로 다른 그림을 준비해 오답용 그림이 양쪽 보드에서 겹치지 않게 합니다.
+  const pictures = [
+    "🐻","🚙","🐤","🦊","🍎","🐸","🌳","⭐","🐱","🍓","🐼","🦋",
+    "🍉","🐶","🚀","🐢","🍒","🦁","🐰","🍋","🐳","🍄","🎈","🐧",
+    "🐨","🦄","🐙","🦖","🐞","🐝","🦉","🐬","🦀","🐌","🐑","🐮",
+    "🥕","🍇","🍍","🍌","🍪","🍩","🍦","🧁","⚽","🎸","✈️","🚲",
+    "🚂","🚁","⛵","🌈","☀️","🌙","☁️","❄️","🌻","🌷","🍀","🔥",
+    "🎁","🎨","🎲","🧸","🪁","👑","💎","🔔","🪄","🛴","🦓","🦒"
+  ];
   let level = "easy", score = 0, foundPairs = 0, secondsLeft = 60, totalSeconds = 60;
   let phase = "idle", timerId = null, previewId = null, startAt = 0, chosenA = null, chosenB = null;
   let pairs = [], soundOn = true, tileSize = "auto", lockInput = false;
@@ -71,12 +79,14 @@
     pairs = selected.map((emoji, i) => ({ emoji, pair: String(i) }));
     const boardA = shuffle(pairs.map(p => ({...p})));
     const boardB = shuffle(pairs.map(p => ({...p})));
-    // Fill the remaining grid spaces with decoy pictures; only selected pairs are shared between boards.
+    // 오답 그림은 양쪽 보드 사이에서도 서로 겹치지 않도록 한 번에 뽑아 분리합니다.
+    // 따라서 두 보드에서 같은 그림이 보이면 반드시 실제 정답 쌍입니다.
     const slots = config.cols * config.cols;
     const decoyCount = Math.max(0, slots - config.pairs);
-    const decoysA = shuffle(pictures.filter(p => !selected.includes(p))).slice(0, decoyCount)
+    const unusedPictures = shuffle(pictures.filter(p => !selected.includes(p)));
+    const decoysA = unusedPictures.slice(0, decoyCount)
       .map((emoji, i) => ({emoji, pair:`a${i}`}));
-    const decoysB = shuffle(pictures.filter(p => !selected.includes(p))).slice(0, decoyCount)
+    const decoysB = unusedPictures.slice(decoyCount, decoyCount * 2)
       .map((emoji, i) => ({emoji, pair:`b${i}`}));
     makeBoard("boardA", shuffle([...boardA, ...decoysA]));
     makeBoard("boardB", shuffle([...boardB, ...decoysB]));
@@ -140,9 +150,10 @@
     }
   }
   function finishGame(won) {
+    const previousPhase = phase;
     clearInterval(timerId); clearTimeout(previewId);
     phase = "finished"; lockInput = true;
-    const elapsed = Math.max(0, Math.round((Date.now() - startAt) / 1000) - (phase === "preview" ? 1 : 0));
+    const elapsed = Math.max(0, Math.round((Date.now() - startAt) / 1000) - (previousPhase === "preview" ? 1 : 0));
     $("resultEmoji").textContent = won ? "🏆" : "💪";
     $("resultTitle").textContent = won ? "참 잘했어요!" : "다음엔 더 잘할 수 있어요!";
     $("resultMessage").textContent = won ? "같은 그림을 모두 찾았어요!" : "괜찮아요! 다시 도전해 봐요.";
