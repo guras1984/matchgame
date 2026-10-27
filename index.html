@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#77d8ff">
+  <title>같은 그림 찾기 게임</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">🔎</div>
+      <div>
+        <p class="eyebrow">즐겁게 관찰하고 기억해요!</p>
+        <h1>같은 그림 찾기</h1>
+      </div>
+      <button id="settingsBtn" class="icon-btn" aria-label="설정">⚙️</button>
+    </header>
+
+    <section id="startScreen" class="screen start-screen">
+      <div class="hero-art" aria-hidden="true">
+        <span class="float-emoji e1">🐻</span><span class="float-emoji e2">🍓</span>
+        <span class="float-emoji e3">🚗</span><span class="float-emoji e4">🐸</span>
+        <div class="hero-lens">🔍</div>
+      </div>
+      <h2>똑같은 그림을 찾아볼까요?</h2>
+      <p class="lead">두 그림판을 잘 살펴보고 같은 그림을 찾아 눌러요.</p>
+      <div class="difficulty-picker" role="group" aria-label="난이도 선택">
+        <button class="difficulty selected" data-level="easy"><span>🌱</span><b>쉬움</b><small>4쌍 · 3×3</small></button>
+        <button class="difficulty" data-level="normal"><span>⭐</span><b>보통</b><small>6쌍 · 4×4</small></button>
+        <button class="difficulty" data-level="hard"><span>🏆</span><b>어려움</b><small>8쌍 · 5×5</small></button>
+      </div>
+      <button id="startBtn" class="primary-btn">게임 시작 <span>▶</span></button>
+      <p class="hint">시작하면 그림을 1초 동안 보여줘요!</p>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen hidden">
+      <div class="status-row">
+        <div class="stat"><span class="stat-icon">⭐</span><div><small>점수</small><b id="score">0</b></div></div>
+        <div class="stat"><span class="stat-icon">⏱️</span><div><small>남은 시간</small><b id="timer">60</b></div></div>
+        <div class="stat"><span class="stat-icon">🎯</span><div><small>찾은 개수</small><b id="found">0 / 4</b></div></div>
+        <button id="quitBtn" class="quit-btn">종료</button>
+      </div>
+      <div id="phaseBanner" class="phase-banner preview">👀 그림을 잘 기억해요! <b>1</b></div>
+      <p id="instruction" class="instruction">두 그림판에서 같은 그림을 찾아 눌러요.</p>
+      <div class="boards" id="boards">
+        <section class="board-wrap">
+          <h3>그림판 A <span>🔵</span></h3>
+          <div id="boardA" class="board" aria-label="그림판 A"></div>
+        </section>
+        <section class="board-wrap">
+          <h3>그림판 B <span>🟡</span></h3>
+          <div id="boardB" class="board" aria-label="그림판 B"></div>
+        </section>
+      </div>
+      <div class="bottom-actions">
+        <button id="restartBtn" class="secondary-btn">↻ 다시 시작</button>
+        <p>천천히 살펴봐도 괜찮아요 😊</p>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen hidden">
+      <div id="resultEmoji" class="result-emoji">🎉</div>
+      <h2 id="resultTitle">참 잘했어요!</h2>
+      <p id="resultMessage">같은 그림을 모두 찾았어요!</p>
+      <div class="result-stats">
+        <div><small>최종 점수</small><b id="finalScore">0</b></div>
+        <div><small>찾은 개수</small><b id="finalFound">0 / 4</b></div>
+        <div><small>걸린 시간</small><b id="elapsed">0초</b></div>
+      </div>
+      <button id="againBtn" class="primary-btn">다시 도전하기 <span>↻</span></button>
+      <button id="homeBtn" class="secondary-btn">처음 화면으로</button>
+    </section>
+
+    <footer>🌈 관찰력과 기억력을 키우는 즐거운 놀이</footer>
+  </main>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="settings-content">
+      <button class="dialog-close" aria-label="닫기">✕</button>
+      <h2>⚙️ 게임 설정</h2>
+      <label class="setting-line"><span>효과음</span><input id="soundToggle" type="checkbox" checked><b class="switch"></b></label>
+      <label class="setting-line"><span>그림 크기</span><select id="sizeSelect"><option value="auto">화면에 맞게 자동</option><option value="large">크게</option><option value="compact">조금 작게</option></select></label>
+      <p class="settings-note">화면 크기에 따라 그림판이 자동으로 정리돼요.</p>
+      <button class="primary-btn dialog-ok">확인</button>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
