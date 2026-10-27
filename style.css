@@ -68,3 +68,13 @@ dialog::backdrop{background:#17426d77;backdrop-filter:blur(3px)}
 @media(min-width:760px){.board{gap:8px}.tile{font-size:clamp(34px,4vw,56px)}.board-wrap{padding:15px}.boards{gap:20px}}
 @media(max-width:520px){body{padding:8px}.topbar{margin-bottom:8px;gap:9px}.brand-mark{width:47px;height:47px;font-size:26px;border-radius:15px}.eyebrow{font-size:11px}.icon-btn{padding:9px}.screen{border-radius:23px}.hero-art{height:120px}.float-emoji{font-size:39px}.hero-lens{font-size:54px}.difficulty-picker{gap:6px}.difficulty{padding:10px 2px;border-radius:14px}.difficulty span{font-size:24px}.difficulty b{font-size:15px}.difficulty small{font-size:9px}.status-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.stat{gap:4px;padding:8px 2px;flex-direction:column}.stat div{align-items:center}.stat-icon{font-size:18px}.stat b{font-size:18px}.stat small{font-size:10px}.quit-btn{grid-column:1/-1;padding:8px}.boards{gap:7px}.board-wrap{padding:6px;border-radius:14px}.board-wrap h3{font-size:12px;margin-bottom:6px}.board{gap:4px}.tile{border-radius:9px;border-width:1px;font-size:clamp(19px,7vw,34px);box-shadow:0 2px 0 #f2cb5b}.instruction{font-size:13px}.phase-banner{font-size:13px}.bottom-actions{gap:8px}.bottom-actions p{width:100%;order:2}.result-stats{gap:5px}.result-stats div{padding:12px 3px}.result-stats small{font-size:10px}.result-stats b{font-size:19px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* Game portal navigation: visible on start, play, and result screens */
+.topbar > div:nth-child(2){min-width:0}
+.portal-home-btn{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-height:44px;padding:10px 15px;border:2px solid #a8eacb;border-radius:15px;background:linear-gradient(180deg,#e5fff2,#b9f5da);color:#146747;text-decoration:none;font-size:14px;font-weight:900;white-space:nowrap;box-shadow:0 4px 0 #83d7af;transition:transform .15s,box-shadow .15s}
+.portal-home-btn:hover{background:#d3ffe8}
+.portal-home-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #83d7af}
+.portal-home-btn:focus-visible{outline:3px solid #168ee8;outline-offset:3px}
+.topbar .icon-btn{margin-left:0;flex-shrink:0}
+@media(max-width:520px){.topbar{flex-wrap:wrap}.topbar > div:nth-child(2){flex:1}.portal-home-btn{order:3;margin-left:0;min-height:42px;padding:8px 13px;font-size:13px}.topbar .icon-btn{margin-left:0}}
+@media(max-width:350px){.topbar h1{font-size:22px}.portal-home-btn{font-size:12px;padding:8px 10px}}
