@@ -51,6 +51,12 @@
   function showScreen(which) {
     Object.entries(screens).forEach(([key, el]) => el.classList.toggle("hidden", key !== which));
   }
+  function returnToStart() {
+    stopTimers(); gameId++; clearSelection();
+    phase = "idle"; lockInput = false;
+    clearTimeout(toastTimeout); $("toast").classList.remove("show");
+    showScreen("start");
+  }
   function shuffle(items) {
     const result = [...items];
     for (let i = result.length - 1; i > 0; i--) {
@@ -196,11 +202,12 @@
   $("startBtn").addEventListener("click", startGame);
   $("restartBtn").addEventListener("click", startGame);
   $("againBtn").addEventListener("click", startGame);
-  $("homeBtn").addEventListener("click", () => { stopTimers(); gameId++; phase = "idle"; showScreen("start"); });
+  $("homeBtn").addEventListener("click", returnToStart);
+  $("startScreenBtn").addEventListener("click", returnToStart);
   $("quitBtn").addEventListener("click", () => {
     if (phase === "preview" || phase === "playing") {
       if (confirm("게임을 종료하고 처음 화면으로 돌아갈까요?")) {
-        stopTimers(); gameId++; clearSelection(); phase = "idle"; showScreen("start");
+        returnToStart();
       }
     }
   });
